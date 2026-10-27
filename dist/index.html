@@ -74,6 +74,21 @@
       .progress-track { height: 6px; margin-top: 15px; overflow: hidden; border-radius: 8px; background: #edf1ec; }
       #progressBar { width: 0; height: 100%; border-radius: inherit; background: #a8d34c; transition: width .2s ease; }
       @keyframes spin { to { transform: rotate(360deg); } }
+      @media (min-width: 701px) and (max-height: 620px) {
+        .app { padding: 14px 24px 18px; }
+        .topbar { padding-bottom: 12px; }
+        .brand-mark { width: 32px; height: 32px; }
+        .intro { padding: 14px 0 12px; }
+        h1 { font-size: clamp(25px, 3vw, 32px); }
+        .toolbar { gap: 8px; padding: 10px; }
+        .file-label, .action-button { min-height: 38px; }
+        .toolstrip { gap: 6px; padding: 9px 10px; }
+        .tool-button { min-height: 34px; }
+        .workspace { margin-top: 12px; }
+        .stage-head { min-height: 38px; }
+        .stage { min-height: 145px; height: min(32vh, 180px); padding: 12px; }
+        .status-row { min-height: 34px; }
+      }
       @media (prefers-reduced-motion: reduce) { *, *::before, *::after { scroll-behavior: auto !important; animation-duration: .01ms !important; animation-iteration-count: 1 !important; transition-duration: .01ms !important; } }
       @media (max-width: 700px) { .app { padding: 16px 14px 20px; } .topbar { padding-bottom: 16px; } .intro { align-items: start; flex-direction: column; gap: 8px; padding: 22px 0 16px; } .image-meta { text-align: left; } .toolbar { gap: 8px; padding: 10px; } .file-label, .action-button { flex: 1 1 calc(50% - 8px); padding: 0 9px; } .toolbar-divider { display: none; } .toolstrip { gap: 6px; padding: 10px; } .tool-button { flex: 1 1 calc(50% - 6px); padding: 0 7px; } .model-quality { justify-content: center; width: 100%; } #eraserOptions, #colorOptions { justify-content: center; width: 100%; } #maskOptions { grid-template-columns: auto 1fr auto; width: 100%; margin: 4px 0 0; padding: 10px 4px 0; border-top: 1px solid #dfe5e1; border-left: 0; } .stage-head { flex-wrap: wrap; gap: 8px; padding: 7px 12px; } .stage { min-height: 280px; height: 62vh; padding: 12px; } }
     </style>
@@ -131,7 +146,7 @@
 
       <section class="workspace" aria-label="Área de trabajo">
         <div class="stage-head"><span>Vista previa</span><div class="zoom-controls"><button id="zoomOut" type="button" aria-label="Alejar" title="Alejar">−</button><span id="zoomLabel">100%</span><button id="zoomIn" type="button" aria-label="Acercar" title="Acercar">+</button><button id="zoomFit" type="button" aria-label="Ajustar al área" title="Ajustar al área">Ajustar</button></div><span>Fondo transparente</span></div>
-        <div class="stage"><canvas id="canvas" width="960" height="620" aria-label="Vista previa editable de la imagen"></canvas></div>
+        <div class="stage"><canvas id="canvas" width="1" height="1" aria-label="Vista previa editable de la imagen"></canvas></div>
         <div class="status-row"><span aria-hidden="true">●</span><span id="statusMessage" aria-live="polite">Abre una imagen para empezar.</span></div>
       </section>
     </main>
