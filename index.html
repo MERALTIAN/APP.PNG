@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Quitar Fondo - Local</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet" />
+    <style>
+      :root { color-scheme: light; font-family: "DM Sans", sans-serif; color: #18211d; background: #f0f3f1; font-synthesis: none; }
+      * { box-sizing: border-box; }
+      body { min-width: 320px; min-height: 100vh; margin: 0; background: radial-gradient(ellipse at 50% -20%, #fff 0, #f3f6f4 44%, #eaf0ec 100%); }
+      button, input { font: inherit; }
+      button { cursor: pointer; }
+      .app { width: min(1440px, 100%); margin: 0 auto; padding: 26px 36px 44px; }
+      .topbar { display: flex; justify-content: space-between; align-items: center; gap: 18px; padding-bottom: 22px; border-bottom: 1px solid rgb(217 224 220 / 78%); }
+      .brand { display: flex; align-items: center; gap: 11px; color: #17221d; font: 700 17px "Space Grotesk", sans-serif; }
+      .brand-mark { display: grid; place-items: center; width: 36px; height: 36px; border-radius: 12px; background: linear-gradient(145deg, #d8ff87, #b8e84e); color: #193016; font-size: 20px; box-shadow: inset 0 1px 0 rgb(255 255 255 / 70%), 0 3px 8px rgb(75 112 31 / 14%); }
+      .local-tag { display: inline-flex; align-items: center; gap: 9px; padding: 8px 12px; border: 1px solid #e1e9e3; border-radius: 999px; background: rgb(255 255 255 / 72%); color: #52615a; font-size: 12px; font-weight: 600; }
+      .local-dot { width: 8px; height: 8px; border-radius: 50%; background: #58aa69; box-shadow: 0 0 0 3px #d7ead9; }
+      .intro { display: flex; justify-content: space-between; align-items: end; gap: 24px; padding: 34px 0 24px; }
+      h1 { margin: 0; font: 700 clamp(28px, 3.2vw, 38px) "Space Grotesk", sans-serif; letter-spacing: -.035em; }
+      .intro p { margin: 7px 0 0; color: #68736d; font-size: 14px; }
+      .image-meta { color: #6a756f; font-size: 12px; text-align: right; }
+      .image-meta:not(:empty) { padding: 9px 13px; border: 1px solid #dfe7e1; border-radius: 10px; background: rgb(255 255 255 / 74%); font-variant-numeric: tabular-nums; }
+      .toolbar { display: flex; align-items: center; flex-wrap: wrap; gap: 10px; padding: 14px; border: 1px solid #e0e7e2; border-radius: 15px 15px 0 0; background: rgb(255 255 255 / 92%); box-shadow: 0 8px 26px rgb(34 54 41 / 5%); }
+      .file-label, .action-button, .tool-button { display: inline-flex; min-height: 42px; justify-content: center; align-items: center; gap: 9px; padding: 0 15px; border: 1px solid #d6ded9; border-radius: 10px; background: #fff; color: #26332c; font-size: 13px; font-weight: 700; transition: background .15s ease, border-color .15s ease, transform .15s ease, box-shadow .15s ease; }
+      .file-label:hover, .action-button:hover, .tool-button:hover { border-color: #aab8af; background: #f5f7f5; box-shadow: 0 2px 6px rgb(27 49 34 / 7%); }
+      button:focus-visible, .file-label:focus-within, select:focus-visible, input:focus-visible { outline: 3px solid rgb(130 181 59 / 42%); outline-offset: 2px; }
+      .file-label { cursor: pointer; }
+      .file-label input { display: none; }
+      #actionControls.flex { display: flex; flex-wrap: wrap; gap: 8px; }
+      .toolbar-divider { width: 1px; height: 28px; margin: 0 3px; background: #e0e5e2; }
+      .action-button.primary { border-color: #a9d24b; background: #c9f36b; color: #1c2e13; }
+      .action-button.primary:hover { background: #bce954; }
+      .action-button.download { border-color: #18211d; background: #18211d; color: #fff; }
+      .action-button:disabled, .tool-button:disabled { cursor: not-allowed; opacity: .48; }
+      .toolstrip { display: flex; align-items: center; flex-wrap: wrap; gap: 8px; padding: 13px 14px; border: 1px solid #e0e7e2; border-top: 1px solid #edf1ee; border-radius: 0 0 15px 15px; background: rgb(248 250 248 / 94%); box-shadow: 0 8px 26px rgb(34 54 41 / 5%); }
+      .tool-button { min-height: 38px; padding: 0 13px; background: transparent; font-size: 12px; }
+      .tool-active { border-color: #294b37; background: #294b37; color: #fff; }
+      .tool-active:hover { border-color: #294b37; background: #294b37; }
+      .model-quality { display: inline-flex; align-items: center; gap: 8px; padding: 3px 4px 3px 10px; border: 1px solid #e2e8e3; border-radius: 10px; background: #fff; color: #5e6a62; font-size: 12px; }
+      .model-quality select { min-height: 36px; padding: 0 9px; border: 1px solid #d6ded9; border-radius: 8px; background: #fff; color: #26332c; font: inherit; }
+      .model-quality select:disabled { cursor: not-allowed; opacity: .6; }
+      #eraserOptions { align-items: center; gap: 10px; padding: 0 8px; color: #65716a; font-size: 12px; }
+      #eraserOptions.flex { display: flex; }
+      #colorOptions { align-items: center; gap: 8px; padding: 0 8px; color: #65716a; font-size: 12px; }
+      #colorOptions.flex { display: flex; }
+      #colorTolerance { width: 110px; accent-color: #a0c94d; }
+      #colorToleranceValue { min-width: 32px; color: #34443a; font-variant-numeric: tabular-nums; }
+      #brushSize { accent-color: #a0c94d; }
+      #maskOptions { display: grid; grid-template-columns: auto minmax(100px, 190px) auto; align-items: center; gap: 10px; margin-left: 3px; padding: 8px 12px; border: 1px solid #e1e8e2; border-radius: 10px; background: #fff; color: #5e6a62; font-size: 12px; }
+      #maskStrength { accent-color: #86b93a; }
+      #maskStrengthValue { min-width: 32px; color: #34443a; font-variant-numeric: tabular-nums; }
+      .workspace { margin-top: 20px; overflow: hidden; border: 1px solid #dce4de; border-radius: 16px; background: #fff; box-shadow: 0 14px 38px rgb(34 54 41 / 7%); }
+      .stage-head { display: flex; justify-content: space-between; align-items: center; min-height: 50px; padding: 0 18px; border-bottom: 1px solid #e5eae7; color: #647169; font-size: 11px; font-weight: 700; letter-spacing: .045em; text-transform: uppercase; }
+      .zoom-controls { display: flex; align-items: center; gap: 5px; color: #58665e; text-transform: none; }
+      .zoom-controls button { display: grid; width: 28px; height: 28px; place-items: center; border: 1px solid #dfe5e1; border-radius: 6px; background: #fff; color: #26332c; font-size: 16px; }
+      .zoom-controls button:hover { background: #f0f4f1; }
+      #zoomLabel { min-width: 42px; text-align: center; font-variant-numeric: tabular-nums; }
+      .stage { display: flex; min-height: 360px; height: min(68vh, 760px); align-items: flex-start; justify-content: flex-start; overflow: auto; padding: 24px; background-color: #fbfcfb; background-image: linear-gradient(45deg, #e9eeeb 25%, transparent 25%), linear-gradient(-45deg, #e9eeeb 25%, transparent 25%), linear-gradient(45deg, transparent 75%, #e9eeeb 75%), linear-gradient(-45deg, transparent 75%, #e9eeeb 75%); background-size: 22px 22px; background-position: 0 0, 0 11px, 11px -11px, -11px 0; }
+      canvas { display: block; flex: none; max-width: none; max-height: none; width: auto; height: auto; margin: auto; touch-action: none; cursor: crosshair; filter: drop-shadow(0 6px 16px rgb(25 38 29 / 14%)); }
+      .status-row { display: flex; align-items: center; gap: 9px; min-height: 44px; padding: 0 18px; border-top: 1px solid #e5eae7; background: #fcfdfc; color: #65716a; font-size: 12px; }
+      .status-row > span:first-child { color: #82b53b; font-size: 10px; }
+      .status-error { color: #b53c35 !important; }
+      .hidden { display: none !important; }
+      #loadingOverlay { position: fixed; inset: 0; z-index: 50; display: flex; align-items: center; justify-content: center; padding: 20px; background: rgb(18 26 21 / 58%); }
+      .loading-panel { width: min(410px, 100%); padding: 26px; border: 1px solid #dce4de; border-radius: 15px; background: #fff; box-shadow: 0 22px 70px rgb(19 29 23 / 24%); }
+      .loading-top { display: flex; align-items: center; gap: 13px; }
+      .spinner { width: 25px; height: 25px; flex: 0 0 25px; border: 3px solid #e4eadf; border-top-color: #86b93a; border-radius: 50%; animation: spin .8s linear infinite; }
+      #loadingTitle { margin: 0; font: 700 17px "Space Grotesk", sans-serif; }
+      #loadingMessage { margin: 14px 0 0; color: #6a756f; font-size: 13px; }
+      .progress-track { height: 6px; margin-top: 15px; overflow: hidden; border-radius: 8px; background: #edf1ec; }
+      #progressBar { width: 0; height: 100%; border-radius: inherit; background: #a8d34c; transition: width .2s ease; }
+      @keyframes spin { to { transform: rotate(360deg); } }
+      @media (prefers-reduced-motion: reduce) { *, *::before, *::after { scroll-behavior: auto !important; animation-duration: .01ms !important; animation-iteration-count: 1 !important; transition-duration: .01ms !important; } }
+      @media (max-width: 700px) { .app { padding: 16px 14px 20px; } .topbar { padding-bottom: 16px; } .intro { align-items: start; flex-direction: column; gap: 8px; padding: 22px 0 16px; } .image-meta { text-align: left; } .toolbar { gap: 8px; padding: 10px; } .file-label, .action-button { flex: 1 1 calc(50% - 8px); padding: 0 9px; } .toolbar-divider { display: none; } .toolstrip { gap: 6px; padding: 10px; } .tool-button { flex: 1 1 calc(50% - 6px); padding: 0 7px; } .model-quality { justify-content: center; width: 100%; } #eraserOptions, #colorOptions { justify-content: center; width: 100%; } #maskOptions { grid-template-columns: auto 1fr auto; width: 100%; margin: 4px 0 0; padding: 10px 4px 0; border-top: 1px solid #dfe5e1; border-left: 0; } .stage-head { flex-wrap: wrap; gap: 8px; padding: 7px 12px; } .stage { min-height: 280px; height: 62vh; padding: 12px; } }
+    </style>
+  </head>
+  <body>
+    <div id="loadingOverlay" class="hidden" role="status" aria-live="polite">
+      <div class="loading-panel">
+        <div class="loading-top"><span class="spinner" aria-hidden="true"></span><h2 id="loadingTitle">Quitando el fondo</h2></div>
+        <p id="loadingMessage">La primera ejecución puede tardar mientras se descarga el modelo.</p>
+        <div class="progress-track"><div id="progressBar"></div></div>
+      </div>
+    </div>
+
+    <main class="app">
+      <header class="topbar">
+        <div class="brand"><span class="brand-mark" aria-hidden="true">◩</span> Recorte Studio</div>
+        <div class="local-tag"><span class="local-dot"></span> Procesamiento privado en tu navegador</div>
+      </header>
+
+      <section class="intro">
+        <div><h1>Quitar fondo</h1><p>Recorta, limpia y exporta imágenes transparentes.</p></div>
+        <div id="imageMeta" class="image-meta"></div>
+      </section>
+
+      <section aria-label="Herramientas de imagen">
+        <div class="toolbar">
+          <label class="file-label" for="imageInput"><span aria-hidden="true">＋</span> Abrir imagen<input id="imageInput" type="file" accept="image/png,image/jpeg,image/webp" /></label>
+          <span class="toolbar-divider" aria-hidden="true"></span>
+          <div id="actionControls" class="hidden">
+            <button id="removeBgBtn" class="action-button primary" type="button"><span aria-hidden="true">✦</span> Quitar fondo</button>
+            <button id="resetBtn" class="action-button" type="button">Volver original</button>
+            <button id="undoBtn" class="action-button" type="button" disabled><span aria-hidden="true">↶</span> Deshacer</button>
+            <button id="downloadBtn" class="action-button download" type="button"><span aria-hidden="true">↓</span> Descargar PNG</button>
+          </div>
+        </div>
+        <div id="toolControls" class="toolstrip hidden" aria-label="Modos de edición">
+          <button id="btnAuto" class="tool-button tool-active" type="button">Automático</button>
+          <label class="model-quality" for="modelQuality">Modelo
+            <select id="modelQuality" aria-label="Calidad del modelo de eliminación de fondo">
+              <option value="isnet" selected>Más detalle</option>
+              <option value="isnet_fp16">Equilibrado</option>
+              <option value="isnet_quint8">Rápido</option>
+            </select>
+          </label>
+          <button id="btnBox" class="tool-button" type="button" title="Dibuja el cuadro alrededor del sujeto completo, dejando un poco de fondo como contexto">Seleccionar área</button>
+          <button id="btnColor" class="tool-button" type="button" title="Un clic limpia una zona conectada; mantener y arrastrar limpia bajo el pincel">Limpiar por color</button>
+          <div id="colorOptions" class="hidden" title="Un clic rellena la zona conectada de color parecido. Al arrastrar, solo se limpia bajo el pincel. Aumenta la tolerancia con cuidado si el sujeto comparte color con el fondo."><label for="colorTolerance">Tolerancia</label><input id="colorTolerance" type="range" min="0" max="100" value="25" /><output id="colorToleranceValue" for="colorTolerance">25%</output></div>
+          <button id="btnErase" class="tool-button" type="button">Borrador manual</button>
+          <button id="btnRestore" class="tool-button" type="button" title="Un toque restaura un círculo del tamaño del pincel; arrastra para recuperar el trazo">Recuperar color</button>
+          <div id="eraserOptions" class="hidden"><label for="brushSize">Tamaño</label><input id="brushSize" type="range" min="5" max="80" value="30" /></div>
+          <div id="maskOptions" class="hidden" title="Aumenta poco a poco para reducir restos tenues. Un valor alto puede quitar cabello o detalles de color parecido al fondo."><label for="maskStrength">Limpiar restos</label><input id="maskStrength" type="range" min="0" max="100" value="0" /><output id="maskStrengthValue" for="maskStrength">0%</output></div>
+        </div>
+      </section>
+
+      <section class="workspace" aria-label="Área de trabajo">
+        <div class="stage-head"><span>Vista previa</span><div class="zoom-controls"><button id="zoomOut" type="button" aria-label="Alejar" title="Alejar">−</button><span id="zoomLabel">100%</span><button id="zoomIn" type="button" aria-label="Acercar" title="Acercar">+</button><button id="zoomFit" type="button" aria-label="Ajustar al área" title="Ajustar al área">Ajustar</button></div><span>Fondo transparente</span></div>
+        <div class="stage"><canvas id="canvas" width="960" height="620" aria-label="Vista previa editable de la imagen"></canvas></div>
+        <div class="status-row"><span aria-hidden="true">●</span><span id="statusMessage" aria-live="polite">Abre una imagen para empezar.</span></div>
+      </section>
+    </main>
+
+    <script type="module" src="/src/main.js"></script>
+  </body>
+</html>

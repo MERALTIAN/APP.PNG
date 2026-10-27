@@ -1,0 +1,18 @@
+{
+  "name": "png-background-remover",
+  "private": true,
+  "version": "1.0.0",
+  "type": "module",
+  "scripts": {
+    "dev": "vite --host 0.0.0.0",
+    "build": "vite build",
+    "preview": "vite preview --host 0.0.0.0"
+  },
+  "devDependencies": {
+    "vite": "^5.4.10"
+  },
+  "dependencies": {
+    "@imgly/background-removal": "^1.5.0",
+    "onnxruntime-web": "^1.21.0-dev.20250206-d981b153d3"
+  }
+}
