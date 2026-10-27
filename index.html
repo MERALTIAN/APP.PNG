@@ -58,6 +58,7 @@
       .stage-head { display: flex; justify-content: space-between; align-items: center; min-height: 50px; padding: 0 18px; border-bottom: 1px solid #e5eae7; color: #647169; font-size: 11px; font-weight: 700; letter-spacing: .045em; text-transform: uppercase; }
       .zoom-controls { display: flex; align-items: center; gap: 5px; color: #58665e; text-transform: none; }
       .zoom-controls button { display: grid; width: 28px; height: 28px; place-items: center; border: 1px solid #dfe5e1; border-radius: 6px; background: #fff; color: #26332c; font-size: 16px; }
+      .zoom-controls button:last-child { width: auto; min-width: 58px; padding: 0 8px; font-size: 12px; }
       .zoom-controls button:hover { background: #f0f4f1; }
       #zoomLabel { min-width: 42px; text-align: center; font-variant-numeric: tabular-nums; }
       .stage { display: flex; min-height: 360px; height: min(68vh, 760px); align-items: flex-start; justify-content: flex-start; overflow: auto; padding: 24px; background-color: #fbfcfb; background-image: linear-gradient(45deg, #e9eeeb 25%, transparent 25%), linear-gradient(-45deg, #e9eeeb 25%, transparent 25%), linear-gradient(45deg, transparent 75%, #e9eeeb 75%), linear-gradient(-45deg, transparent 75%, #e9eeeb 75%); background-size: 22px 22px; background-position: 0 0, 0 11px, 11px -11px, -11px 0; }
@@ -91,7 +92,43 @@
         .status-row { min-height: 34px; }
       }
       @media (prefers-reduced-motion: reduce) { *, *::before, *::after { scroll-behavior: auto !important; animation-duration: .01ms !important; animation-iteration-count: 1 !important; transition-duration: .01ms !important; } }
-      @media (max-width: 700px) { .app { padding: 16px 14px 20px; } .topbar { padding-bottom: 16px; } .intro { align-items: start; flex-direction: column; gap: 8px; padding: 22px 0 16px; } .image-meta { text-align: left; } .toolbar { gap: 8px; padding: 10px; } .file-label, .action-button { flex: 1 1 calc(50% - 8px); padding: 0 9px; } .toolbar-divider { display: none; } .toolstrip { gap: 6px; padding: 10px; } .tool-button { flex: 1 1 calc(50% - 6px); padding: 0 7px; } .model-quality { justify-content: center; width: 100%; } #eraserOptions, #colorOptions { justify-content: center; width: 100%; } #maskOptions { grid-template-columns: auto 1fr auto; width: 100%; margin: 4px 0 0; padding: 10px 4px 0; border-top: 1px solid #dfe5e1; border-left: 0; } .stage-head { flex-wrap: wrap; gap: 8px; padding: 7px 12px; } .stage { min-height: 280px; height: 62vh; padding: 12px; } }
+      @media (max-width: 700px) {
+        .app { padding: 14px 12px 20px; }
+        .topbar { align-items: flex-start; padding-bottom: 14px; }
+        .local-tag { gap: 7px; padding: 7px 9px; font-size: 10px; }
+        .brand { gap: 8px; font-size: 15px; }
+        .brand-mark { width: 32px; height: 32px; }
+        .intro { align-items: flex-start; flex-direction: column; gap: 10px; padding: 20px 2px 15px; }
+        .intro p { max-width: 34ch; font-size: 13px; line-height: 1.45; }
+        .image-meta { text-align: left; }
+        .toolbar { gap: 8px; padding: 9px; }
+        .file-label { flex: 1 1 100%; min-height: 42px; }
+        #actionControls.flex { flex: 1 1 100%; display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 7px; }
+        .action-button { min-width: 0; min-height: 40px; padding: 0 8px; font-size: 12px; }
+        .toolbar-divider { display: none; }
+        .toolstrip { gap: 7px; padding: 9px; }
+        .tool-button { flex: 1 1 calc(50% - 7px); min-width: 0; min-height: 40px; padding: 0 6px; font-size: 11px; }
+        .model-quality { justify-content: space-between; width: 100%; min-height: 40px; }
+        #eraserOptions, #colorOptions { justify-content: space-between; width: 100%; min-height: 40px; padding: 0 5px; }
+        #brushSize, #colorTolerance { flex: 1; min-width: 80px; max-width: 180px; }
+        #maskOptions { grid-template-columns: auto minmax(70px, 1fr) auto; gap: 8px; width: 100%; margin: 2px 0 0; padding: 8px 5px; }
+        .workspace { margin-top: 14px; border-radius: 13px; }
+        .stage-head { display: grid; grid-template-columns: 1fr auto; gap: 8px; min-height: 44px; padding: 7px 10px; font-size: 10px; }
+        .stage-head > span:last-child { display: none; }
+        .zoom-controls { justify-content: flex-end; gap: 4px; }
+        .stage { min-height: 260px; height: 58vh; max-height: 560px; padding: 10px; }
+        .status-row { align-items: flex-start; min-height: 42px; height: auto; padding: 10px 12px; line-height: 1.4; }
+        .loading-panel { padding: 21px; }
+      }
+      @media (max-width: 380px) {
+        .app { padding-right: 9px; padding-left: 9px; }
+        .local-tag { max-width: 175px; line-height: 1.3; }
+        .tool-button { font-size: 10px; }
+        .stage { min-height: 230px; height: 52vh; }
+        .stage-head { padding-right: 7px; padding-left: 7px; }
+        .zoom-controls button { width: 26px; height: 26px; }
+        .zoom-controls button:last-child { width: auto; min-width: 52px; padding: 0 6px; }
+      }
     </style>
   </head>
   <body>
